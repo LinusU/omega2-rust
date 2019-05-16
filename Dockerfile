@@ -1,19 +1,11 @@
 FROM ubuntu:18.04
 
 # Install prerequisites
-RUN apt-get update && apt-get install -y git wget curl subversion build-essential libncurses5-dev zlib1g-dev gawk flex quilt git-core unzip libssl-dev python-dev python-pip libxml-parser-perl
+RUN apt-get update && apt-get install -y time git wget curl subversion build-essential libncurses5-dev zlib1g-dev gawk flex quilt git-core unzip libssl-dev python-dev python-pip libxml-parser-perl
 
 # Clone toolchain source
 WORKDIR /toolchain
 RUN git clone https://github.com/OnionIoT/source.git
-
-# Apply patches
-WORKDIR /toolchain/source
-RUN git remote add upstream https://github.com/openwrt/openwrt && git fetch upstream
-RUN git config --global user.email "you@example.com" && git config --global user.name "Your Name"
-
-# https://github.com/openwrt/openwrt/commit/58a95f0f8ff768b43d68eed2b6a786e0f40f723b
-RUN git cherry-pick 58a95f0f8ff768b43d68eed2b6a786e0f40f723b
 
 # Build toolchain
 WORKDIR /toolchain/source
