@@ -9,6 +9,8 @@ RUN git clone https://github.com/OnionIoT/source.git
 
 # Build toolchain
 WORKDIR /toolchain/source
+RUN git checkout 96400e1588d034260f3ccdb9aacb9d07513488a6
+RUN python ./scripts/onion-setup-build.py
 RUN FORCE_UNSAFE_CONFIGURE=1 make -j8 toolchain/install
 
 # Install rustup
