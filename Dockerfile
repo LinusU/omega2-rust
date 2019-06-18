@@ -36,6 +36,10 @@ RUN \
   echo 'linker = "mipsel-openwrt-linux-musl-gcc"' >> /root/.cargo/config && \
   echo 'runner = "qemu-mipsel -L /toolchain/staging_dir/toolchain-mipsel_24kc_gcc-7.3.0_musl"' >> /root/.cargo/config
 
+# Configure cc
+ENV CC_mipsel_unknown_linux_musl=/toolchain/source/staging_dir/toolchain-mipsel_24kc_gcc-7.3.0_musl/bin/mipsel-openwrt-linux-musl-gcc
+ENV CXX_mipsel_unknown_linux_musl=/toolchain/source/staging_dir/toolchain-mipsel_24kc_gcc-7.3.0_musl/bin/mipsel-openwrt-linux-musl-g++
+
 # Setup volumes
 VOLUME /build
 WORKDIR /build
