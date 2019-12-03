@@ -14,7 +14,10 @@ RUN git clone https://github.com/OnionIoT/source.git . && git checkout 4baf50502
 RUN python ./scripts/onion-setup-build.py && FORCE_UNSAFE_CONFIGURE=1 make -j8 toolchain/install
 
 # Setup environment
-ENV PATH=$PATH:/toolchain/staging_dir/toolchain-mipsel_24kc_gcc-7.3.0_musl/bin
+ENV \
+  STAGING_DIR=/toolchain/staging_dir \
+  PATH=$PATH:/toolchain/staging_dir/toolchain-mipsel_24kc_gcc-7.3.0_musl/bin \
+  CC_mipsel_unknown_linux_musl=mipsel-openwrt-linux-musl-gcc
 
 # Install rustup
 ARG FLAVOR
