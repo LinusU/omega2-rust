@@ -8,7 +8,7 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-ins
 
 # Clone toolchain source
 WORKDIR /toolchain
-RUN git clone https://github.com/OnionIoT/source.git . && git checkout 96400e1588d034260f3ccdb9aacb9d07513488a6
+RUN git clone https://github.com/OnionIoT/source.git . && git checkout 4baf505026b15e74408d431e453f69e8c07a52b4
 
 # Build toolchain
 RUN python ./scripts/onion-setup-build.py && FORCE_UNSAFE_CONFIGURE=1 make -j8 toolchain/install
