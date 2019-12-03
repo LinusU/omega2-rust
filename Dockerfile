@@ -33,7 +33,8 @@ RUN \
   echo 'target = "mipsel-unknown-linux-musl"' >> /root/.cargo/config && \
   echo '' >> /root/.cargo/config && \
   echo '[target.mipsel-unknown-linux-musl]' >> /root/.cargo/config && \
-  echo 'linker = "mipsel-openwrt-linux-musl-gcc"' >> /root/.cargo/config
+  echo 'linker = "mipsel-openwrt-linux-musl-gcc"' >> /root/.cargo/config && \
+  echo 'runner = "qemu-mipsel -L /toolchain/staging_dir/toolchain-mipsel_24kc_gcc-7.3.0_musl"' >> /root/.cargo/config
 
 # Setup volumes
 VOLUME /build
