@@ -8,16 +8,13 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-ins
 
 # Clone toolchain source
 WORKDIR /toolchain
-RUN git clone https://github.com/OnionIoT/source.git
+RUN git clone https://github.com/OnionIoT/source.git . && git checkout 96400e1588d034260f3ccdb9aacb9d07513488a6
 
 # Build toolchain
-WORKDIR /toolchain/source
-RUN git checkout 96400e1588d034260f3ccdb9aacb9d07513488a6
-RUN python ./scripts/onion-setup-build.py
-RUN FORCE_UNSAFE_CONFIGURE=1 make -j8 toolchain/install
+RUN python ./scripts/onion-setup-build.py && FORCE_UNSAFE_CONFIGURE=1 make -j8 toolchain/install
 
 # Setup environment
-ENV PATH=$PATH:/toolchain/source/staging_dir/toolchain-mipsel_24kc_gcc-7.3.0_musl/bin
+ENV PATH=$PATH:/toolchain/staging_dir/toolchain-mipsel_24kc_gcc-7.3.0_musl/bin
 
 # Install rustup
 ARG FLAVOR
