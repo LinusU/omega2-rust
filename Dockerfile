@@ -16,6 +16,9 @@ RUN git checkout 96400e1588d034260f3ccdb9aacb9d07513488a6
 RUN python ./scripts/onion-setup-build.py
 RUN FORCE_UNSAFE_CONFIGURE=1 make -j8 toolchain/install
 
+# Setup environment
+ENV PATH=$PATH:/toolchain/source/staging_dir/toolchain-mipsel_24kc_gcc-7.3.0_musl/bin
+
 # Install rustup
 ARG FLAVOR
 RUN curl https://sh.rustup.rs -sSf | sh -s -- --default-toolchain $FLAVOR -y
@@ -30,7 +33,7 @@ RUN \
   echo 'target = "mipsel-unknown-linux-musl"' >> /root/.cargo/config && \
   echo '' >> /root/.cargo/config && \
   echo '[target.mipsel-unknown-linux-musl]' >> /root/.cargo/config && \
-  echo 'linker = "/toolchain/source/staging_dir/toolchain-mipsel_24kc_gcc-7.3.0_musl/bin/mipsel-openwrt-linux-musl-gcc"' >> /root/.cargo/config
+  echo 'linker = "mipsel-openwrt-linux-musl-gcc"' >> /root/.cargo/config
 
 # Setup volumes
 VOLUME /build
