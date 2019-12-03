@@ -1,7 +1,10 @@
-FROM ubuntu:18.04
+FROM ubuntu:19.04
 
 # Install prerequisites
-RUN apt-get update && apt-get install -y time git wget curl subversion build-essential libncurses5-dev zlib1g-dev gawk flex quilt git-core unzip libssl-dev python-dev python-pip libxml-parser-perl
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+  build-essential ca-certificates curl file flex gawk git git-core libncurses5-dev \
+  libssl-dev libxml-parser-perl patch python-dev python-pip qemu-system-mipsel \
+  qemu-user quilt rsync subversion time unzip wget xz-utils zlib1g-dev
 
 # Clone toolchain source
 WORKDIR /toolchain
