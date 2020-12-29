@@ -19,6 +19,14 @@ ENV \
   PATH=$PATH:/toolchain/staging_dir/toolchain-mipsel_24kc_gcc-7.3.0_musl/bin \
   CC_mipsel_unknown_linux_musl=mipsel-openwrt-linux-musl-gcc
 
+# Build openssl 1.1.1
+WORKDIR /toolchain/source
+RUN git remote add upstream https://github.com/lede-project/source.git && git fetch upstream
+RUN rm -r package/libs/openssl && git checkout upstream/openwrt-19.07 -- package/libs/openssl
+RUN make -j8 package/openssl/compile
+ENV MIPSEL_UNKNOWN_LINUX_MUSL_OPENSSL_DIR=/toolchain/source/staging_dir/target-mipsel_24kc_musl/usr
+ENV MIPSEL_UNKNOWN_LINUX_MUSL_OPENSSL_STATIC=1
+
 # Install rustup
 ARG FLAVOR
 RUN curl https://sh.rustup.rs -sSf | sh -s -- --default-toolchain $FLAVOR -y
@@ -39,6 +47,10 @@ RUN \
 # Configure cc
 ENV CC_mipsel_unknown_linux_musl=/toolchain/source/staging_dir/toolchain-mipsel_24kc_gcc-7.3.0_musl/bin/mipsel-openwrt-linux-musl-gcc
 ENV CXX_mipsel_unknown_linux_musl=/toolchain/source/staging_dir/toolchain-mipsel_24kc_gcc-7.3.0_musl/bin/mipsel-openwrt-linux-musl-g++
+
+# Hack to update registry
+# https://github.com/rust-lang/cargo/issues/3377
+RUN cargo install cargo-bloat
 
 # Setup volumes
 VOLUME /build
