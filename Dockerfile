@@ -1,17 +1,17 @@
-FROM ubuntu:19.04
+FROM ubuntu:20.04
 
 # Install prerequisites
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
   build-essential ca-certificates curl file flex gawk git git-core libncurses5-dev \
-  libssl-dev libxml-parser-perl patch python-dev python-pip qemu-system-mipsel \
+  libssl-dev libxml-parser-perl patch python2 python3-dev python3-pip qemu-system-mipsel \
   qemu-user quilt rsync subversion time unzip wget xz-utils zlib1g-dev
 
 # Clone toolchain source
 WORKDIR /toolchain
-RUN git clone https://github.com/OnionIoT/source.git . && git checkout 4baf505026b15e74408d431e453f69e8c07a52b4
+RUN git clone https://github.com/LinusU/OnionIoT-source.git . && git checkout ad099bb750b8ee8c0a3a27fc3848cd8622d70826
 
 # Build toolchain
-RUN python ./scripts/onion-setup-build.py && FORCE_UNSAFE_CONFIGURE=1 make -j8 toolchain/install
+RUN python3 ./scripts/onion-setup-build.py && FORCE_UNSAFE_CONFIGURE=1 make -j8 toolchain/install
 
 # Setup environment
 ENV \
